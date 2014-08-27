@@ -1,0 +1,14 @@
+{% extends "frontpage.html" %}
+{% block slide %}
+<ul>
+	{% for item in slideList %}
+		<li>
+			<ul>
+				<li><a href="/view/{{ item }}">{{ item }} </a></li>
+				<!-- <li><a href="/rs/{{ item.shortUrl }}">/rs/{{ item.shortUrl }}</a></li>
+				<li><a href="/md/{{ item.shortUrl}} ">/md/{{ item.shortUrl }} </a></li> -->
+			</ul>
+		</li>
+	{% endfor %}
+</ul>
+{% endblock %}

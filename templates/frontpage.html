@@ -12,30 +12,50 @@ body{
     border-color     : #999999;
     border-width     : 2px;
     line-height      : 1.5;
-    margin           : 2em 3em;
     text-align       :left;
-    font-size        : 1.2em;
     padding          : 0 100px 0 100px;
+
+    font-size: 1.2em;
+    /* Equivelant of 1.2em */
+    /*font-size        : 1.5vw;*/
+    
+    /*Taken from "Reveal.js" */
+    width: 960px;
+    height: 700px;
+
+    width         : 660px;
+    margin-top    : 0px;
+    margin-bottom : 0px;
+    margin-left   : auto;
+    margin-right  : auto;
 }
 
 h1 {
     font-family : 'Gill Sans Bold', 'Optima Bold', Arial, sans-serif;
     color       : #999;
     font-weight : 400;
-    font-size   : 36px;
+
+    font-size: 36px;
+    /* Equivelent of about 34px */
+    /*font-size   : 2.8vw;*/
 }
 h2{
     border-bottom : 1px dotted #aaa;
     margin-bottom : 1em;
     color         : #333;
-    font-size     : 30px;
+
+    font-size: 30px;
+    /*font-size     : 2.4vw;*/
 }
 h3{
     color     : #666;
+
     font-size : 24px;
+    /*font-size : 2vw;*/
 }
 h4 {
     font-size: 21px;
+    /*font-size: 1.7vw;*/
 }
 h5 {
     font-size: 18px;
@@ -78,6 +98,63 @@ blockquote {
   </style>
 </head>
 <body>
-    {{slide | safe}}
+<div class="slip">
+    <div class="slides">
+        {% block slide %}
+            {{slide | safe}}
+        {% endblock slide %}
+    </div>
+</div>
 </body>
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+var slip = (function(){
+    var dom = {},
+        config = {
+            width: 960,
+            height: 700,
+
+            margin: 0.1,
+
+            minScale: 0.2,
+            maxScale: 1.0
+        };
+    var init_dom = function(){
+        dom.wrapper = document.querySelector('.slip');
+        dom.slides = document.querySelector('.slip .slides')
+
+    }
+
+    var layout = function(){
+        // Much of this is taken from reveal.js (bless hakimel's soul for
+        // having worked on this before me!)
+
+        // Available space to scale within
+        var availableWidth = dom.wrapper.offsetWidth,
+            availableHeight = dom.wrapper.offsetHeight;
+
+        // Reduce available space by margin
+        availableWidth -= ( availableHeight * config.margin );
+        availableHeight -= ( availableHeight * config.margin );
+
+        // Dimensions of the content
+        var slideWidth = config.width,
+            slideHeight = config.height,
+            slidePadding = 20; // TODO Dig this out of DOM
+
+        // A chunk where handling for width based on percentage has been cut
+        // out of here.
+
+        dom.slides.style.width = slideWidth + 'px';
+        dom.slides.style.height = slideHeight + 'px';
+
+        // Determine scale of content to fit within available space
+        scale = Math.min( availableWidth / slideWidth, availableHeight / slideHeight );
+        
+        // Respect max/min scale settings
+        scale = Math.max( scale, config.minScale );
+        scale = Math.min( scale, config.maxScale );
+    };
+}); 
+</script>
 </html>

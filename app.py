@@ -6,6 +6,7 @@ import flask_slides
 slide = flask_slides.flask_slides()
 app = Flask(__name__)
 
+slide_list = []
 
 def jsonDump(inDat):
 	return json.dumps(inDat, sort_keys=True, indent=4, separators=(',', ': '))
@@ -14,13 +15,15 @@ def jp(inDat):
 
 @app.route('/')
 def root():
-	return render_template('frontpage.html')
+	return render_template('frontpage.html', slide="<h1>Flask Slides</h1>", name="Frontpage")
 
 
 @app.route('/list/')
 def list():
 	slides = slide.get_slides()
-	return Response(jsonDump(slides), mimetype='text/plain' )
+
+	return render_template('list.html', slideList = slides)
+	# return Response(jsonDump(slides), mimetype='text/plain' )
 
 
 @app.route('/view/<slide_name>')
