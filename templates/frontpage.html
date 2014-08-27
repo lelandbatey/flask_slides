@@ -13,12 +13,16 @@ body{
     border-width     : 2px;
     line-height      : 1.5;
     text-align       :left;
+    padding          : 0 100px 0 100px;
 
     font-size: 1.2em;
     /* Equivelant of 1.2em */
     /*font-size        : 1.5vw;*/
     
-    padding          : 0 100px 0 100px;
+    /*Taken from "Reveal.js" */
+    width: 960px;
+    height: 700px;
+
     width         : 660px;
     margin-top    : 0px;
     margin-bottom : 0px;
@@ -94,9 +98,63 @@ blockquote {
   </style>
 </head>
 <body>
-
-    {% block slide %}
-        {{slide | safe}}
-    {% endblock slide %}
+<div class="slip">
+    <div class="slides">
+        {% block slide %}
+            {{slide | safe}}
+        {% endblock slide %}
+    </div>
+</div>
 </body>
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+var slip = (function(){
+    var dom = {},
+        config = {
+            width: 960,
+            height: 700,
+
+            margin: 0.1,
+
+            minScale: 0.2,
+            maxScale: 1.0
+        };
+    var init_dom = function(){
+        dom.wrapper = document.querySelector('.slip');
+        dom.slides = document.querySelector('.slip .slides')
+
+    }
+
+    var layout = function(){
+        // Much of this is taken from reveal.js (bless hakimel's soul for
+        // having worked on this before me!)
+
+        // Available space to scale within
+        var availableWidth = dom.wrapper.offsetWidth,
+            availableHeight = dom.wrapper.offsetHeight;
+
+        // Reduce available space by margin
+        availableWidth -= ( availableHeight * config.margin );
+        availableHeight -= ( availableHeight * config.margin );
+
+        // Dimensions of the content
+        var slideWidth = config.width,
+            slideHeight = config.height,
+            slidePadding = 20; // TODO Dig this out of DOM
+
+        // A chunk where handling for width based on percentage has been cut
+        // out of here.
+
+        dom.slides.style.width = slideWidth + 'px';
+        dom.slides.style.height = slideHeight + 'px';
+
+        // Determine scale of content to fit within available space
+        scale = Math.min( availableWidth / slideWidth, availableHeight / slideHeight );
+        
+        // Respect max/min scale settings
+        scale = Math.max( scale, config.minScale );
+        scale = Math.min( scale, config.maxScale );
+    };
+}); 
+</script>
 </html>
