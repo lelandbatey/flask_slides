@@ -12,30 +12,46 @@ body{
     border-color     : #999999;
     border-width     : 2px;
     line-height      : 1.5;
-    margin           : 2em 3em;
     text-align       :left;
-    font-size        : 1.2em;
+
+    font-size: 1.2em;
+    /* Equivelant of 1.2em */
+    /*font-size        : 1.5vw;*/
+    
     padding          : 0 100px 0 100px;
+    width         : 660px;
+    margin-top    : 0px;
+    margin-bottom : 0px;
+    margin-left   : auto;
+    margin-right  : auto;
 }
 
 h1 {
     font-family : 'Gill Sans Bold', 'Optima Bold', Arial, sans-serif;
     color       : #999;
     font-weight : 400;
-    font-size   : 36px;
+
+    font-size: 36px;
+    /* Equivelent of about 34px */
+    /*font-size   : 2.8vw;*/
 }
 h2{
     border-bottom : 1px dotted #aaa;
     margin-bottom : 1em;
     color         : #333;
-    font-size     : 30px;
+
+    font-size: 30px;
+    /*font-size     : 2.4vw;*/
 }
 h3{
     color     : #666;
+
     font-size : 24px;
+    /*font-size : 2vw;*/
 }
 h4 {
     font-size: 21px;
+    /*font-size: 1.7vw;*/
 }
 h5 {
     font-size: 18px;
@@ -78,6 +94,9 @@ blockquote {
   </style>
 </head>
 <body>
-    {{slide | safe}}
+
+    {% block slide %}
+        {{slide | safe}}
+    {% endblock slide %}
 </body>
 </html>
