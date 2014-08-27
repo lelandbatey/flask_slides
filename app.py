@@ -1,3 +1,4 @@
+#! /bin/env python
 from __future__ import print_function
 from flask import Flask, request, json, render_template, Response
 import flask_slides
