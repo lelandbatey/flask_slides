@@ -34,7 +34,7 @@ def view(slide_name):
 
 @app.route('/present')
 def present():
-	return render_template('frontpage.html',slide=slide.render_index(slide.index), name ="Presenting")
+	return render_template('slide_page.html',slide=slide.render_index(slide.index), name ="Presenting")
 
 
 @app.route('/present/index')
@@ -43,7 +43,7 @@ def present_index():
 
 	Client uses this to see if the slide has changed.
 	"""
-	return slide.index
+	return str(slide.index)
 
 # Sends the contents of the slide, but doesn't render the entire page. Used by
 # the client to update the body of the slide page.

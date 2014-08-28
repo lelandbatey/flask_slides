@@ -102,16 +102,21 @@ h1, h2, h3, h4, h5, code, pre, blockquote, p {
 
 //////////////// Poll Script ////////////////
 //
-// 
+// Every 
+//
 
 
 function update_slide(slide_contents){
-	
+	console.log(slide_contents);
+	var slides = document.querySelector('#slides');
+	console.log(slides);
+
+	slides.innerHTML = slide_contents;
 }
 
 
-// Updates the contents of the chat box by polling the server.
-function poll(current_slide_index){
+// Updates the contents of the slide div by polling the server.
+function poll(){
 	setTimeout(function(){
 		$.ajax({
 			url: '/present/index',
@@ -119,16 +124,24 @@ function poll(current_slide_index){
 				// If the slide has changed, get the contents of the new slide
 				// and update the page.
 				if (data != current_slide_index){
+					console.log(data);
+					console.log(current_slide_index);
+					current_slide_index = data;
 					$.ajax({
 						url: '/present/current_slide',
-						success: update_slide;
+						success: update_slide
 					});
 				};
+				current_slide_index = data;
 			}
 		});
-		poll();
-	},2000);
+		poll(current_slide_index);
+	},250);
 };
+
+var current_slide_index = "what";
+
+poll();
 
 </script>
 {% endblock script%}

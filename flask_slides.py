@@ -109,7 +109,8 @@ class flask_slides(object):
 			# List comprehension of the above stripping process.
 			return [ '.'.join(f.split('.')[:-1]) for f in files ]
 
-	# Creating properties for index so we can keep it from dropping below 0
+	# Creating properties for index so we can keep it from dropping below 0 or
+	# going beyond the number of total slides.
 	@property
 	def index(self):
 		return self._index
@@ -117,6 +118,8 @@ class flask_slides(object):
 	def index(self, value):
 		if value < 0:
 			self._index = 0
+		elif value > len(self.get_slides().keys())-1:
+			self._index = len(self.get_slides().keys())-1
 		else:
 			self._index = value
 
