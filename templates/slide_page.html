@@ -1,0 +1,134 @@
+{% extends "frontpage.html" %}
+
+{% block css %}
+<!-- 
+Google Font - Libre Baskerville
+
+I'm using this font in *my* presentation, but you don't have to use it in
+yours. Remove it if you like.   
+
+-->
+<link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+<style type="text/css">
+
+/*
+ ******** Style CSS ********
+ *
+
+ * CSS for making the text and other stuff look pretty.
+ 
+ */
+
+body{
+    font-family      : 'Libre Baskerville', serif;
+    color            : #333;
+    background-color : #fff;
+    line-height      : 1.5;
+    text-align       : left;
+    font-size        : 1.2em;
+    margin-top       : 0px;
+    margin-bottom    : 0px;
+    margin-left      : auto;
+    margin-right     : auto;
+    position         : relative;
+}
+
+h1 {
+    margin      : 0;
+    /*font-family : 'Gill Sans Bold', 'Optima Bold', Arial, sans-serif;*/
+    color       : #999;
+    font-weight : 400;
+    font-size   : 36px;
+}
+h2{
+    border-bottom : 1px dotted #aaa;
+    margin-bottom : 1em;
+    color         : #333;
+    font-size     : 30px;
+}
+h3{
+    color     : #666;
+    font-size : 24px;
+}
+h4 {
+    font-size: 21px;
+}
+h5 {
+    font-size: 18px;
+}
+code {
+    font-family      : Consolas, "Inconsolata", Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif; /* Taken from the stackOverflow CSS*/
+    background-color : #f5f5f5;
+    border           : 1px solid #e1e1e8;
+}
+
+pre {
+    display          : block;
+    background-color : #f5f5f5;
+    border           : 1px solid #ccc;
+    padding          : 3px 3px 3px 3px;
+}
+pre code {
+    white-space      : pre-wrap;
+    padding          : 0;
+    border           : 0;
+    background-color : code;
+}
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid lightgray;
+}
+blockquote {
+    border-left : 4px solid #DDD;
+    padding     : 0px 15px;
+    color       : #777;
+}
+h1, h2, h3, h4, h5, code, pre, blockquote, p {
+    margin-top: 0;
+}
+
+</style>
+{% endblock %}
+
+{% block slide %}
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+
+// Requires jQuery to work
+
+//////////////// Poll Script ////////////////
+//
+// 
+
+
+function update_slide(slide_contents){
+	
+}
+
+
+// Updates the contents of the chat box by polling the server.
+function poll(current_slide_index){
+	setTimeout(function(){
+		$.ajax({
+			url: '/present/index',
+			success: function(data){
+				// If the slide has changed, get the contents of the new slide
+				// and update the page.
+				if (data != current_slide_index){
+					$.ajax({
+						url: '/present/current_slide',
+						success: update_slide;
+					});
+				};
+			}
+		});
+		poll();
+	},2000);
+};
+
+</script>
+{% endblock script%}

@@ -37,6 +37,21 @@ def present():
 	return render_template('frontpage.html',slide=slide.render_index(slide.index), name ="Presenting")
 
 
+@app.route('/present/index')
+def present_index():
+	"""Returns index of current slide.
+
+	Client uses this to see if the slide has changed.
+	"""
+	return slide.index
+
+# Sends the contents of the slide, but doesn't render the entire page. Used by
+# the client to update the body of the slide page.
+@app.route('/present/current_slide')
+def present_current_slide():
+	return slide.render_index(slide.index)
+
+
 @app.route('/remote')
 def remote():
 	return render_template("remote.html")
