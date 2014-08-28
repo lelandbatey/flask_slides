@@ -18,6 +18,8 @@ class flask_slides(object):
 	def __init__(self, slides_dir=os.getcwd()+'/slides'):
 		# super(flask_slides, self).__init__()
 		self.slides_dir = slides_dir
+		self._index = 0
+		self.noneStr = "<h1>No data for that slide</h1>"
 		
 	def get_slides(self):
 		"""Returns dictionary of slide information for slides in slides_dir.
@@ -45,8 +47,9 @@ class flask_slides(object):
 		If the slide exists, gets everything between the strings "<slide>" and "</slide>".
 		If it doesn't exist, returns string "Does not exist".
 		"""
-		noneStr = "<h1>No data for that slide</h1>"
+		
 		slides = self.get_slides()
+		slide_path = ""
 
 		# print(slide_name)
 		# Check for slide short-names first
@@ -74,7 +77,7 @@ class flask_slides(object):
 
 		# If no slide was found, or if the slide was empty
 		if not slide:
-			slide = noneStr
+			slide = self.noneStr
 
 		# Pass the slide through a markdown renderer. This preserves html, if
 		# it's entered, but parses markdown into html. Allows for mixing of
@@ -82,6 +85,20 @@ class flask_slides(object):
 		slide = markdown.markdown(slide, safe_mode=False)
 
 		return slide
+
+	def render_index(self, slide_number):
+		"""Given an index, render that slide (in the series of slides)."""
+		self.index = slide_number
+		i = 0
+		slide_list = sorted(self.get_slides())
+		# print(slide_list)
+		for x in slide_list:
+			if i == slide_number:
+				# print(x)
+				return self.render_slide(x)
+			i += 1
+
+		return self.noneStr
 
 	def strip_ext(self, files):
 		"""Given a file name or list of file names, strips the extension from each file name."""
@@ -92,6 +109,16 @@ class flask_slides(object):
 			# List comprehension of the above stripping process.
 			return [ '.'.join(f.split('.')[:-1]) for f in files ]
 
+	# Creating properties for index so we can keep it from dropping below 0
+	@property
+	def index(self):
+		return self._index
+	@index.setter
+	def index(self, value):
+		if value < 0:
+			self._index = 0
+		else:
+			self._index = value
 
 
 

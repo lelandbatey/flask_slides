@@ -32,6 +32,30 @@ def view(slide_name):
 	return render_template('frontpage.html', slide=slide_output, name=slide_name)
 
 
+@app.route('/present')
+def present():
+	return render_template('frontpage.html',slide=slide.render_index(slide.index), name ="Presenting")
+
+
+@app.route('/remote')
+def remote():
+	return render_template("remote.html")
+
+
+@app.route('/remote/next')
+def next():
+	slide.index += 1
+	print(slide.index)
+	return ""
+
+
+@app.route('/remote/prior')
+def prior():
+	slide.index -= 1
+	print(slide.index)
+	return ""
+
+
 
 
 # list()
