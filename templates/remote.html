@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		 
+		 <style type="text/css">
+body {
+	width: 100%;
+	margin: 0;
+}
+
+.left, .right {
+	width: 50%;
+	height: 100%;
+	min-height: 100%;
+	display: inline-block;
+	text-align: center;
+	font-size: 120px;
+}
+
+/* Vertical centering of triangles */
+.left *, .right * {
+	color: white;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.left {
+	background-color: FireBrick;
+	float: left;
+}
+
+.right {
+	background-color: RoyalBlue;
+	float: right;
+}
+		 </style>
+	</head>
+
+	<body>
+		<div class="left">
+			<div>&#x21E6;</div>
+		</div>
+		<div class="right">
+			<div>&#x21E8;</div>
+		</div>
+	</body>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript">
+
+$('.left').click(function(){
+	$.get('/remote/prior');
+});
+
+$('.right').click(function(){
+	$.get('/remote/next');
+});
+
+
+function resize_divs(){
+	$('.left').height($(window).height()- 2);
+	$('.right').height($(window).height()- 2);
+};
+
+// When the browser's resized
+$(window).resize(resize_divs);
+
+$(document).ready(function(){
+	resize_divs();
+});
+
+	</script>
+</html>
