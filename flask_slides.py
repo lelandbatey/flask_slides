@@ -11,7 +11,6 @@ def jsonDump(inDat):
 def jp(inDat):
 	print(jsonDump(inDat))
 
-md = markdown.Markdown(safe_mode=False)
 
 class flask_slides(object):
 	"""Object for interacting with slides files"""
@@ -82,7 +81,7 @@ class flask_slides(object):
 		# Pass the slide through a markdown renderer. This preserves html, if
 		# it's entered, but parses markdown into html. Allows for mixing of
 		# the two.
-		slide = markdown.markdown(slide, safe_mode=False)
+		slide = markdown.markdown(slide, safe_mode=False, extensions=['codehilite(css_class=highlight)'])
 
 		return slide
 
