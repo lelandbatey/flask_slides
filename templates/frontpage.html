@@ -1,36 +1,37 @@
 <!DOCTYPE html>
+<html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   
   <title>{{name}} | Flask Slides</title>
   <style type="text/css">
   /*code{white-space: pre;}*/
+
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+
 body{
     font-family      : helvetica, arial, freesans, clean, sans-serif;
     color            : #333;
     background-color : #fff;
-    border-color     : #999999;
-    border-width     : 2px;
     line-height      : 1.5;
-    text-align       :left;
-    padding          : 0 100px 0 100px;
+    text-align       : left;
 
     font-size: 1.2em;
-    /* Equivelant of 1.2em */
-    /*font-size        : 1.5vw;*/
-    
-    /*Taken from "Reveal.js" */
-    width: 960px;
-    height: 700px;
-
-    width         : 660px;
     margin-top    : 0px;
     margin-bottom : 0px;
     margin-left   : auto;
     margin-right  : auto;
+
+    position: relative;
 }
 
 h1 {
+    margin: 0;
     font-family : 'Gill Sans Bold', 'Optima Bold', Arial, sans-serif;
     color       : #999;
     font-weight : 400;
@@ -95,6 +96,30 @@ blockquote {
     padding: 0px 15px;
     color: #777;
 }
+
+h1, h2, h3, h4, h5, code, pre, blockquote, p {
+    margin-top: 0;
+}
+
+
+.slip {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    margin: 0;
+    /*overflow: hidden;*/
+}
+
+.slides {
+    position: absolute;
+    margin: 0 auto;
+    left: 50%;
+    top: 50%;
+    bottom: auto;
+    right: auto;
+    /*overflow: hidden;*/
+}
+
   </style>
 </head>
 <body>
@@ -106,7 +131,7 @@ blockquote {
     </div>
 </div>
 </body>
- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
 var slip = (function(){
     var dom = {},
@@ -114,24 +139,51 @@ var slip = (function(){
             width: 960,
             height: 700,
 
-            margin: 0.1,
+            margin: 0.0,
 
             minScale: 0.2,
             maxScale: 1.0
         };
-    var init_dom = function(){
+
+    function initialize(){
+        init_dom();
+
+        console.log("Initializing slip");
+        // Adding our event listeners
+        window.addEventListener( 'resize', onWindowResize, false );
+        layout();
+    }
+
+    function init_dom(){
         dom.wrapper = document.querySelector('.slip');
         dom.slides = document.querySelector('.slip .slides')
 
     }
 
-    var layout = function(){
+    /**
+    * Applies a CSS transform to the target element.
+    */
+    function transformElement( element, transform ) {
+        element.style.WebkitTransform = transform;
+        element.style.MozTransform = transform;
+        element.style.msTransform = transform;
+        element.style.OTransform = transform;
+        element.style.transform = transform;
+    }
+
+
+
+
+    function layout(){
         // Much of this is taken from reveal.js (bless hakimel's soul for
         // having worked on this before me!)
 
+        // var availableWidth = dom.wrapper.offsetWidth,
+        //     availableHeight = dom.wrapper.offsetHeight;
+
         // Available space to scale within
-        var availableWidth = dom.wrapper.offsetWidth,
-            availableHeight = dom.wrapper.offsetHeight;
+        var availableWidth = document.body.offsetWidth,
+            availableHeight = document.body .offsetHeight;
 
         // Reduce available space by margin
         availableWidth -= ( availableHeight * config.margin );
@@ -145,16 +197,59 @@ var slip = (function(){
         // A chunk where handling for width based on percentage has been cut
         // out of here.
 
-        dom.slides.style.width = slideWidth + 'px';
-        dom.slides.style.height = slideHeight + 'px';
+        console.log("availableWidth  : ", availableWidth);
+        console.log("availableHeight : ", availableHeight);
+        console.log("slideWidth      : ", slideWidth);
+        console.log("slideHeight     : ", slideHeight);
+
 
         // Determine scale of content to fit within available space
         scale = Math.min( availableWidth / slideWidth, availableHeight / slideHeight );
         
+        console.log("scale: ",scale)
+
         // Respect max/min scale settings
         scale = Math.max( scale, config.minScale );
         scale = Math.min( scale, config.maxScale );
+
+        dom.slides.style.width = slideWidth + 'px';
+        dom.slides.style.height = slideHeight*scale + 'px';
+        
+        console.log('scale           :', scale);
+        console.log();
+        
+
+        // Do the scale/transformation
+        transformElement( dom.slides, 'translate(-50%, -50%) scale('+ scale +')' );
+
+
     };
-}); 
+
+    /**
+    * Handler for the window level 'resize' event.
+    */
+    function onWindowResize( event ) {
+        layout();
+    }
+
+
+    //////////// API ////////////
+
+    return {
+        initialize: initialize,
+        layout: layout
+    }
+
+})(); 
+
+
+slip.initialize();
+
+
+
+
+
+
 </script>
+
 </html>
