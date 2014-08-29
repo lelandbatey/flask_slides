@@ -33,6 +33,7 @@ function poll(){
 					});
 				};
 				current_slide_index = data;
+				document.querySelector('#slide_index').innerHTML = data;
 			}
 		});
 		poll(current_slide_index);
