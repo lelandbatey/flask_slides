@@ -17,12 +17,12 @@ def jp(inDat):
 
 @app.route('/')
 def root():
-	return render_template('frontpage.html', slide="<h1>Flask Slides</h1>", name="Frontpage")
+	return render_template('front.html', name="Frontpage")
 
 
 @app.route('/list/')
 def list():
-	slides = slide.get_slides()
+	slides = sorted(slide.get_slides().keys())
 
 	return render_template('list.html', slideList = slides)
 	# return Response(jsonDump(slides), mimetype='text/plain' )
@@ -31,12 +31,12 @@ def list():
 @app.route('/view/<slide_name>')
 def view(slide_name):
 	slide_output = slide.render_slide(slide_name)
-	return render_template('frontpage.html', slide=slide_output, name=slide_name)
+	return render_template('slide_page.html', slide=slide_output, name=slide_name)
 
 
 @app.route('/present')
 def present():
-	return render_template('slide_page.html',slide=slide.render_index(slide.index), name ="Presenting")
+	return render_template('slide_page.html',slide=slide.render_index(slide.index), name ="Presenting", live=True)
 
 
 @app.route('/present/index')
