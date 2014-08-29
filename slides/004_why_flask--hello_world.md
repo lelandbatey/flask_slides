@@ -7,6 +7,7 @@ Why Flask?
 
 	#!python
 	from flask import Flask
+	# Simple "Hello World"
 
 	app = Flask(__name__)
 
