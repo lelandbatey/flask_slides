@@ -1,7 +1,9 @@
 #! /bin/env python
 from __future__ import print_function
 from flask import Flask, request, json, render_template, Response
+from pprint import pprint
 import flask_slides
+import urllib2
 
 slide = flask_slides.flask_slides()
 app = Flask(__name__)
@@ -70,7 +72,15 @@ def prior():
 	print(slide.index)
 	return ""
 
+@app.route('/error')
+def error():
+	return var_that_doesnt_exist
 
+
+@app.route('/prox/<path:requestPath>')
+def prox(requestPath):
+	data = urllib2.urlopen(requestPath).read()
+	return data
 
 
 # list()
