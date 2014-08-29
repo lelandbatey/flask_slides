@@ -1,0 +1,63 @@
+body {
+    font-family : 'Libre Baskerville', serif;
+    font-size: 54px;
+    vertical-align: middle;
+}
+
+h1 {
+    /*font-family : 'Gill Sans Bold', 'Optima Bold', Arial, sans-serif;*/
+    margin        : 0;
+    color         : #333;
+    font-weight   : 400;
+    font-size     : 60px;
+    border-bottom : 1px dotted #aaa;
+    margin-bottom : 1em;
+    text-align    : center;
+}
+
+#present, #remote, #list {
+    display: inline-block;
+    text-align: center;
+    height: 40%;
+}
+
+#remote, #list {
+    width: 50%;
+}
+
+#present {
+    background-color: #2E2E2E;
+    
+    width: 100%;
+}
+
+#remote {
+    background-color: SteelBlue;
+    float: left;
+}
+
+#list {
+    background-color: DarkOrange;
+    float: right; 
+}
+
+a {
+    color: lightgrey;
+    text-decoration: none;
+}
+
+a:link {
+    color: lightgrey;
+    border-bottom: 2px solid blue;
+}
+
+a:visited {
+    color: lightgrey;
+    border-bottom: 2px solid purple;
+}
+
+/* Vertical centering of links */
+#present *, #remote *, #list * {
+    position: relative;
+    top: 35%;
+}
