@@ -13,8 +13,7 @@ What I Hope to Cover
 
 - What is Flask?
 - Features of Flask / Why I Love Flask
-	- API
-	- Documentation
+	- API & Documentation
 - Community, Extensions and Ecosystem
 	- `basic_http` as example
 - Real World Use
