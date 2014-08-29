@@ -66,6 +66,7 @@ class flask_slides(object):
 		if isfile(slide_path):
 			with open(slide_path, 'r') as f:
 				slide = f.read()
+				slide = slide.decode('utf-8')
 				f.close()
 
 			# Container tags allow for independant static viewing
