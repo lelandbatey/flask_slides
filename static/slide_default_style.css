@@ -13,12 +13,14 @@ body{
     background-color : #fff;
     line-height      : 1.5;
     text-align       : left;
-    font-size        : 36px;
+    font-size        : 32px;
     margin-top       : 0px;
     margin-bottom    : 0px;
     margin-left      : auto;
     margin-right     : auto;
     position         : relative;
+
+    overflow: hidden;
 }
 
 h1 {
@@ -80,6 +82,7 @@ blockquote {
     border-left : 4px solid #DDD;
     padding     : 0px 15px;
     color       : #777;
+    font-size   : 36px;
 }
 h1, h2, h3, h4, h5, code, pre, blockquote, p {
     margin-top: 0;
@@ -88,8 +91,18 @@ h1, h2, h3, h4, h5, code, pre, blockquote, p {
 .highlighttable {
 	margin: 0 auto;
 	width : 10%;
+    margin-bottom: 32px;
+    line-height: 1.3em;
 }
 
 .linenodiv {
 	color: #ccc;
+}
+
+li {
+    margin-bottom: 20px;
+}
+
+ul {
+    margin-top: 10px;
 }

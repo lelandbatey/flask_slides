@@ -99,7 +99,7 @@ var slip = (function(){
         //
         // Notice the additional translate on the end. I've removed it here
         // because it was messing up the display in my case.
-        transformElement( dom.slides, 'translate(-50%, -50%) scale('+ scale +')' );
+        transformElement( dom.slides, 'translate(-50%, -53%) scale('+ scale +')' );
     };
 
     /**
