@@ -2,7 +2,7 @@ Flask_Slides
 ============
 
 
-Flask_Slides is a super small, super simple tool for presenting slides online as an interactive web-app. The key to Flask_Slides is it's remote-view architecture. Instead of a single page that must be navigated via keyboard keys, it instead works by having one page that acts as the "view", and another page that does the controlling (next/previous slide).
+Flask_Slides is a super small, super simple tool for presenting a slide-show using a web browser. The key to Flask_Slides is it's remote-view architecture. Instead of a single page that must be navigated via keyboard keys, it instead works by having one page that acts as the "view", and another page that does the controlling (next/previous slide).
 
 
 Layout
