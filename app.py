@@ -47,6 +47,12 @@ def present_index():
 	"""
 	return str(slide.index)
 
+@app.route('/present/total_slides')
+def total_slides():
+	"""Returns total number of slides in deck."""
+	return str(len(slide.get_slides()))
+
+
 # Sends the contents of the slide, but doesn't render the entire page. Used by
 # the client to update the body of the slide page.
 @app.route('/present/current_slide')
@@ -69,7 +75,7 @@ def next():
 @app.route('/remote/prior')
 def prior():
 	slide.index -= 1
-	print(slide.index)
+	# print(slide.index)
 	return ""
 
 @app.route('/error')

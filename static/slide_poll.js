@@ -9,9 +9,22 @@
 //
 
 
-function update_slide(slide_contents){
-	var slides = document.querySelector('#slides');
-	slides.innerHTML = slide_contents;
+function update_slide(slide_index){
+	$.ajax({
+		url: '/present/current_slide',
+		success: function(slide_contents){
+			// Update the slide counter in the bottom right corner.
+			$.get('/present/total_slides', function(total_slides){
+				total_slides = (+total_slides)-1; // To prevent off-by-one in display
+				document.querySelector('#slide_index').innerHTML = slide_index+" / "+total_slides;
+				
+				// Then update the contents of the slide
+				var slides = document.querySelector('#slides');
+				slides.innerHTML = slide_contents;
+			});
+		}
+	});
+
 }
 
 
@@ -27,16 +40,11 @@ function poll(){
 					// console.log(data);
 					// console.log(current_slide_index);
 					current_slide_index = data;
-					$.ajax({
-						url: '/present/current_slide',
-						success: update_slide
-					});
+					update_slide(data);
 				};
-				current_slide_index = data;
-				document.querySelector('#slide_index').innerHTML = data;
+			poll(current_slide_index);
 			}
 		});
-		poll(current_slide_index);
 	},250);
 };
 
