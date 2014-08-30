@@ -1,5 +1,6 @@
 Templating
 ==========
 
-- Uses Jinja2, which is built in
-- Simple but powerful
+- Uses Jinja2 engine
+	- Built into Flask
+- Straightforward and powerful
