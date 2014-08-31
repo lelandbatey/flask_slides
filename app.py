@@ -25,7 +25,6 @@ def list():
 	slides = sorted(slide.get_slides().keys())
 
 	return render_template('list.html', slideList = slides)
-	# return Response(jsonDump(slides), mimetype='text/plain' )
 
 
 @app.route('/view/<slide_name>')
@@ -68,14 +67,12 @@ def remote():
 @app.route('/remote/next')
 def next():
 	slide.index += 1
-	print(slide.index)
 	return ""
 
 
 @app.route('/remote/prior')
 def prior():
 	slide.index -= 1
-	# print(slide.index)
 	return ""
 
 @app.route('/error')

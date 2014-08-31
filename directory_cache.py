@@ -77,14 +77,10 @@ class directory_cache(object):
 		in size from the cached version.
 
 		"""
-
 		current_state = self.sizes_dict
 		current_cache = self._cache
 
 		current_cache = { f : current_cache[f]['size'] for f in current_cache }
-
-		jp(current_cache)
-		jp(current_state)
 
 		for x in current_state:
 			if x not in current_cache.keys():
