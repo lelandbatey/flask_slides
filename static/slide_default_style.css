@@ -46,14 +46,16 @@ h4 {
 h5 {
     font-size: 33px;
 }
-code {
+pre, code {
+    
+    font-family      : Consolas, "Inconsolata", Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif; /* Taken from the stackOverflow CSS*/
     background-color : #f5f5f5;
+}
+code {
     border           : 1px solid #e1e1e8;
 }
-
 pre {
     display          : block;
-    background-color : #f5f5f5;
     border           : 1px solid #ccc;
     padding          : 3px 3px 3px 3px;
     margin           : 0 auto;
@@ -63,27 +65,25 @@ pre code {
     white-space      : pre-wrap;
     padding          : 0;
     border           : 0;
-    background-color : code;
     margin           : 0 auto;
 }
-pre, code {
-    
-    font-family      : Consolas, "Inconsolata", Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif; /* Taken from the stackOverflow CSS*/
-}
+
 table {
     border-collapse: collapse;
 }
-
 table, th, td {
-    border : 1px solid lightgray;
+    /*border : 1px solid lightgray;*/
     padding: 0;
 }
+
+
 blockquote {
     border-left : 4px solid #DDD;
     padding     : 0px 15px;
     color       : #777;
     font-size   : 36px;
 }
+
 h1, h2, h3, h4, h5, code, pre, blockquote, p {
     margin-top: 0;
 }
@@ -94,10 +94,16 @@ h1, h2, h3, h4, h5, code, pre, blockquote, p {
     margin-bottom: 32px;
     line-height: 1.3em;
 }
-
-.linenodiv {
+.linenodiv pre{
 	color: #ccc;
+    border-right: 0;
+    /*margin-right: 10px;*/
 }
+.highlight pre{
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
 
 li {
     margin-bottom: 20px;

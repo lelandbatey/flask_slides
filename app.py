@@ -50,7 +50,7 @@ def present_index():
 @app.route('/present/total_slides')
 def total_slides():
 	"""Returns total number of slides in deck."""
-	return str(len(slide.get_slides()))
+	return str(len(slide.get_slide_list()))
 
 
 # Sends the contents of the slide, but doesn't render the entire page. Used by
