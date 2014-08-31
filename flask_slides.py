@@ -1,6 +1,8 @@
 from __future__ import print_function
 import markdown
-from os.path import join, abspath, isfile, basename
+from os.path import join, abspath, isfile, basename, getsize
+from time import sleep
+import directory_cache
 import os.path
 import json
 import os
@@ -11,6 +13,15 @@ def jsonDump(inDat):
 def jp(inDat):
 	print(jsonDump(inDat))
 
+def strip_ext(files):
+	"""Given a file name or list of file names, strips the extension from each file name."""
+	if   isinstance(files, basestring):
+		return '.'.join(files.split('.')[:-1])
+	elif isinstance(files, list):
+		# List comprehension of the above stripping process.
+		return [ '.'.join(f.split('.')[:-1]) for f in files ]
+
+
 
 class flask_slides(object):
 	"""Object for interacting with slides files"""
@@ -19,6 +30,12 @@ class flask_slides(object):
 		self.slides_dir = slides_dir
 		self._index = 0
 		self.noneStr = "<h1>No data for that slide</h1>"
+		self.cache = directory_cache.directory_cache(self.slides_dir)
+		
+
+	def get_slide_list(self):
+		"""Returns sorted list of slides in the slide directory"""
+		return self.cache.get_files_list()
 		
 	def get_slides(self):
 		"""Returns dictionary of slide information for slides in slides_dir.
@@ -26,17 +43,12 @@ class flask_slides(object):
 		Keys in the dictionary are the names of the slide files, with only the file extension removed.
 		Values in the dict are the full paths to the slide files in the slides_dir.
 		"""
-		
-		slides_dir = os.path.abspath(self.slides_dir)
-		slides = [ f for f in os.listdir(slides_dir) if isfile(join(slides_dir, f))]
-
-		# print(slides)
+		slides = self.get_slide_list()
 		toRet = {}
 
 		for x in slides:
-			toRet[self.strip_ext(x)] = abspath(join(self.slides_dir,x))
+			toRet[strip_ext(x)] = abspath(join(self.slides_dir,x))
 
-		# print(toRet)
 		return toRet
 
 	def render_slide(self, slide_name):
@@ -49,25 +61,25 @@ class flask_slides(object):
 		
 		slides = self.get_slides()
 		slide_path = ""
-
-		# print(slide_name)
-		# Check for slide short-names first
-		for x in slides:
-			# If name format is "slide_name"
-			if self.strip_ext(basename(slides[x])) == slide_name:
-				slide_path = slides[x]
-				break
-			# Else if name format is "slide_name.extension"
-			elif basename(slides[x]) == slide_name:
-				slide_path = slides[x]
-				break
-
 		slide = ""
-		if isfile(slide_path):
-			with open(slide_path, 'r') as f:
-				slide = f.read()
-				slide = slide.decode('utf-8')
-				f.close()
+
+		# Try to match the given slide to the path of the actual file
+		for x in slides:
+			# If name format is "slide_name.extension"
+			if slide_name in self.cache.keys():
+				slide_path = cache[slide_name]
+				break
+			# Else if name format is "slide_name"
+			else:
+				for k in self.cache.keys():
+					if self.cache[k]['no_ext'] == slide_name:
+						slide_path = k
+						break
+				if slide_path: break
+
+		if slide_path:
+			# Get contents of slide
+			slide = self.cache[slide_path]['data']
 
 			# Container tags allow for independant static viewing
 			if '<slide>' in slide:
@@ -100,15 +112,6 @@ class flask_slides(object):
 
 		return self.noneStr
 
-	def strip_ext(self, files):
-		"""Given a file name or list of file names, strips the extension from each file name."""
-
-		if   isinstance(files, basestring):
-			return '.'.join(files.split('.')[:-1])
-		elif isinstance(files, list):
-			# List comprehension of the above stripping process.
-			return [ '.'.join(f.split('.')[:-1]) for f in files ]
-
 	# Creating properties for index so we can keep it from dropping below 0 or
 	# going beyond the number of total slides.
 	@property
@@ -124,12 +127,14 @@ class flask_slides(object):
 			self._index = value
 
 
-
-
-
 if __name__ == '__main__':
 	f = flask_slides()
-	jp(f.get_slides())
+	# jp(f.cache)
+	# jp(f.get_slides())
+	print(f.render_slide('00000_test'))
+	sleep(10)
+	print(f.render_slide('00000_test'))
+	sleep(1)
 	exit()
 
 
