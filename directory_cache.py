@@ -81,13 +81,18 @@ class directory_cache(object):
 		current_state = self.sizes_dict
 		current_cache = self._cache
 
+		current_cache = { f : current_cache[f]['size'] for f in current_cache }
+
+		jp(current_cache)
+		jp(current_state)
+
 		for x in current_state:
 			if x not in current_cache.keys():
-				return False
-			elif current_state[x] != current_cache[x]['size']:
-				return False
-			else:
 				return True
+			elif current_state[x] != current_cache[x]:
+				return True
+
+		return False
 
 	def build_cache(self):
 		"""Builds (or re-builds) the `self.cache` object"""

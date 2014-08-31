@@ -103,10 +103,8 @@ class flask_slides(object):
 		self.index = slide_number
 		i = 0
 		slide_list = sorted(self.get_slides())
-		# print(slide_list)
 		for x in slide_list:
 			if i == slide_number:
-				# print(x)
 				return self.render_slide(x)
 			i += 1
 
@@ -119,23 +117,19 @@ class flask_slides(object):
 		return self._index
 	@index.setter
 	def index(self, value):
+		slide_count = len(self.get_slide_list())-1
 		if value < 0:
 			self._index = 0
-		elif value > len(self.get_slides().keys())-1:
-			self._index = len(self.get_slides().keys())-1
+		elif value > slide_count:
+			self._index = slide_count
 		else:
 			self._index = value
 
 
 if __name__ == '__main__':
 	f = flask_slides()
-	# jp(f.cache)
-	# jp(f.get_slides())
-	print(f.render_slide('00000_test'))
-	sleep(10)
-	print(f.render_slide('00000_test'))
-	sleep(1)
-	exit()
+	jp(f.get_slides())
+
 
 
 
