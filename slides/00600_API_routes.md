@@ -9,6 +9,9 @@ pre {
 	display: inline-block;
 	vertical-align: top;
 }
+.highlight pre {
+	padding: 0;
+}
 
 </style>
 Routes
