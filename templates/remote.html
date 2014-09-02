@@ -15,6 +15,13 @@ body {
 	display     : inline-block;
 	text-align  : center;
 	font-size   : 120px;
+	/* Stops the div from being highlighted when being clicked */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 /* Vertical centering of arrows */
@@ -23,13 +30,6 @@ body {
 	position  : relative;
 	top       : 50%;
 	transform : translateY(-50%);
-	/* Stops the div from being highlighted when being clicked */
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
 }
 
 .left {
@@ -55,14 +55,6 @@ body {
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script type="text/javascript">
 
-$('.left').click(function(){
-	$.get('/remote/prior');
-});
-
-$('.right').click(function(){
-	$.get('/remote/next');
-});
-
 
 function resize_divs(){
 	$('.left').height($(window).height()- 2);
@@ -77,4 +69,5 @@ $(document).ready(function(){
 });
 
 	</script>
+	<script type="text/javascript" src="/static/slide_control.js"></script>
 </html>

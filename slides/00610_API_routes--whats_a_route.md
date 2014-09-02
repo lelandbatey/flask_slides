@@ -5,7 +5,7 @@ What's a Route?
 ---------------
 
 - Binds a function to a URL
-- Uses the `route()` decorator for easy binding 
+- Uses the `route()` decorator for easy binding
 
 <!--  -->
 
