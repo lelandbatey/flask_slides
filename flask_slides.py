@@ -84,7 +84,7 @@ class flask_slides(object):
 		for x in slides:
 			# If name format is "slide_name.extension"
 			if slide_name in self.cache.keys():
-				slide_path = cache[slide_name]
+				slide_path = self.cache[slide_name]
 				break
 			# Else if name format is "slide_name"
 			else:
@@ -111,7 +111,7 @@ class flask_slides(object):
 		# Pass the slide through a markdown renderer. This preserves html, if
 		# it's entered, but parses markdown into html. Allows for mixing of
 		# the two.
-		slide = markdown.markdown(slide, safe_mode=False, extensions=['codehilite(css_class=highlight)'])
+		slide = markdown.markdown(slide, safe_mode=False, extensions=['codehilite(css_class=highlight,linenums=True)'])
 
 		return slide
 
