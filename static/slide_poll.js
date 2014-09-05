@@ -12,6 +12,7 @@
 function update_slide(slide_index){
 	$.ajax({
 		url: '/present/current_slide',
+		cache: false,
 		success: function(slide_contents){
 			// Update the slide counter in the bottom right corner.
 			$.get('/present/total_slides', function(total_slides){
@@ -33,6 +34,7 @@ function poll(){
 	setTimeout(function(){
 		$.ajax({
 			url: '/present/index',
+			cache: false,
 			success: function(data){
 				// If the slide has changed, get the contents of the new slide
 				// and update the page.

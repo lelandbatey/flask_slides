@@ -16,5 +16,5 @@ Routes
 
 	@app.route('/remote/next')
 	def next():
-		slide.index += 1
+		slide_deck.index += 1
 		return ""
