@@ -10,10 +10,13 @@ app = Flask(__name__)
 
 slide_list = []
 
+# These are just some pet debug functions I love to have around. You'll
+# probably find them all over the place. It's lazy and I don't care.
 def jsonDump(inDat):
 	return json.dumps(inDat, sort_keys=True, indent=4, separators=(',', ': '))
 def jp(inDat):
 	print(jsonDump(inDat))
+
 
 @app.route('/')
 def root():
@@ -23,7 +26,6 @@ def root():
 @app.route('/list/')
 def list():
 	slides = sorted(slide.get_slides().keys())
-
 	return render_template('list.html', slideList = slides)
 
 
@@ -33,9 +35,13 @@ def view(slide_name):
 	return render_template('slide_page.html', slide=slide_output, name=slide_name)
 
 
-@app.route('/present')
+@app.route('/present/')
 def present():
-	return render_template('slide_page.html',slide=slide.render_index(slide.index), name ="Presenting", live=True)
+	"""Renders the slide page, including the current slide. This means the
+	javascript doesn't have to load the slide, so there's no lag/delay.
+	"""
+	return render_template('slide_page.html',slide=slide.render_index(slide.index),
+		name ="Presenting", live=True)
 
 
 @app.route('/present/index')
@@ -64,22 +70,28 @@ def remote():
 	return render_template("remote.html")
 
 
+# Because I am an EXTREMELY lazy person, these are simple GET requests that
+# modify state. It's not a very flexible way of modifying the state, since it
+# only allows for incrementing from one slide to another. A more flexible way
+# would be to have this be a post request that takes a variable that's
+# supposed to be the slide to switch to.
 @app.route('/remote/next')
 def next():
 	slide.index += 1
 	return ""
-
-
 @app.route('/remote/prior')
 def prior():
 	slide.index -= 1
 	return ""
 
+
+# This is intentionally throws an error, since it's used in one of the slides.
 @app.route('/error')
 def error():
 	return var_that_doesnt_exist
 
-
+# Trivial example of proxy which I included because I think I may use it in my
+# presentation. Might not though. We'll see.
 @app.route('/prox/<path:requestPath>')
 def prox(requestPath):
 	data = urllib2.urlopen(requestPath).read()

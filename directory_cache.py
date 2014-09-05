@@ -7,6 +7,48 @@ import time
 import json
 import os
 
+################ Directory Cache ################
+# 
+# 
+### What is the purpose of this: ###
+#
+# I wrote this as a simple in-memory copy of the files found on disk. All the
+# files are read into memory at the beginning, and they're re-read into memory
+# if they're modified, or if new files are added. 
+#
+# There's a simple thread that is perpetually checking the directory and
+# updating a data structure with the names and sizes of all files in the
+# directory being cached. When it goes to read a file, it first checks that
+# the in-memory data structure has all the same files as the updated
+# structure, as well as checking that each in-memory file is the same size as
+# the files in the updated structure. If there's a difference, it re-builds
+# the entire cache then returns the requested data. If there's no difference,
+# it just returns the requested data.
+#
+#
+###     Why was this written:    ###
+#
+# I have a disk that can be extremely slow to seek to the start of a file.
+# Sequential read and writes are fast, but reading a new file is frequently
+# slow, and slow enough to notice. I wrote this so I could always read the
+# data I wanted quickly, while also making sure that in-memory cache would be
+# up to date if I changed a file or added a new file.
+#
+#
+###            Notes:            ###
+#
+# This is the first time I've ever written anything like this. I don't know if
+# there's some way to do this already, or if I could have done it better using
+# some feature of python I'm not aware of. However, I'd love to learn about
+# whatever mistakes or naive assumptions I've made in this code. If you do
+# find something you think should be fixed, I'd really love to hear about it,
+# either as a Github issue or as an email to me at lelandbatey@gmail.com
+#
+# Thanks for taking a look at all this, I hope it's useful/educational/humorous!
+#
+#  : )
+#
+
 
 def jsonDump(inDat):
 	return json.dumps(inDat, sort_keys=True, indent=4, separators=(',', ': '))
@@ -65,8 +107,6 @@ class directory_cache(object):
 		# Every 0.5 seconds, re-evaluates the size of all the files in the watched directory
 		while True:
 			self.sizes_dict = build_file_size_dir(self.data_dir)
-			# jp(self.sizes_dict)
-			# print(time.time())
 			sleep(0.5)
 
 	def is_cache_outdated(self):

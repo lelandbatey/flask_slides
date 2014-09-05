@@ -7,6 +7,23 @@ import os.path
 import json
 import os
 
+################  Flask_Slides   ################
+# 
+# 
+###             What:            ###
+#
+# Flask_slides takes the simple model of slides as files in a directory and
+# gives it an API. This is to make programatically loading and navigating the
+# slides easier.
+#
+#
+###             Why:             ###
+#
+# Because it would have been a pain (and messy!) to implement all this in the
+# `app.py` file. This way, `app.py` just does http/Flask stuff, and the
+# handling the slides is done over here.
+#
+
 
 def jsonDump(inDat):
 	return json.dumps(inDat, sort_keys=True, indent=4, separators=(',', ': '))
