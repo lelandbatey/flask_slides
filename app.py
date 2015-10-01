@@ -9,7 +9,7 @@ import flask_slides
 import urllib2
 # pylint: disable=W0312
 
-FLASK_SLIDES = flask_slides.flask_slides()
+FLASK_SLIDES = flask_slides.FlaskSlides()
 APP = Flask(__name__)
 
 

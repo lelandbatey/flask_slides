@@ -89,7 +89,7 @@ def strip_ext(files):
 		return ['.'.join(f.split('.')[:-1]) for f in files]
 
 
-class directory_cache(object):
+class DirectoryCache(object):
 	"""Cache of all files in root level of a directory.
 
 	Only works with utf-8 encoded text files, since that's what I'm going to be

@@ -46,14 +46,14 @@ def strip_ext(files):
 
 
 
-class flask_slides(object):
+class FlaskSlides(object):
 	"""Object for interacting with slides files"""
 	def __init__(self, slides_dir=os.getcwd()+'/slides'):
 		# super(flask_slides, self).__init__()
 		self.slides_dir = slides_dir
 		self._index = 0
 		self.invalid_slide = "<h1>No data for that slide</h1>"
-		self.cache = directory_cache.directory_cache(self.slides_dir)
+		self.cache = directory_cache.DirectoryCache(self.slides_dir)
 
 
 	def get_slide_list(self):
@@ -128,7 +128,7 @@ class flask_slides(object):
 		"""Given an index, render that slide (in the series of slides)."""
 		self.index = slide_number
 		slide_list = sorted(self.get_slides())
-		for idx, value in slide_list:
+		for idx, value in enumerate(slide_list):
 			if idx == slide_number:
 				return self.render_slide(value)
 
