@@ -6,7 +6,11 @@
 from __future__ import print_function
 from flask import Flask, json, render_template
 import flask_slides
-import urllib2
+try:
+	from urllib2 import urlopen
+except ImportError:
+	# python3 uses urllib.request.urlopen
+	from urllib.request import urlopen
 # pylint: disable=W0312
 
 FLASK_SLIDES = flask_slides.FlaskSlides()
@@ -109,7 +113,7 @@ def error():
 @APP.route('/prox/<path:request_path>')
 def prox(request_path):
 	"""Acts as a trivial example of a proxy, for use in presentation."""
-	data = urllib2.urlopen(request_path).read()
+	data = urlopen(request_path).read()
 	return data
 
 

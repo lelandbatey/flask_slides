@@ -66,7 +66,10 @@ def get_file_contents(file_name):
 	"""Read a text file conveniently and properly."""
 	ret_val = None
 	with open(file_name, 'r') as tmp_file:
-		ret_val = tmp_file.read().decode('utf-8')
+		ret_val = tmp_file.read()
+		if hasattr(ret_val, 'decode'):
+			# python2 decode to utf-8
+			ret_val = ret_val.decode('utf-8')
 	return ret_val
 
 def get_dir_files(path):
