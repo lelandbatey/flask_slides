@@ -62,11 +62,14 @@ def jdump(obj):
 	return json.dumps(obj, sort_keys=True, indent=4, separators=(',', ': '))
 
 # Gets contents of a file
-def get_file_contents(file_name):
+def get_file_contents(filename):
 	"""Read a text file conveniently and properly."""
 	ret_val = None
-	with open(file_name, 'r') as tmp_file:
-		ret_val = tmp_file.read().decode('utf-8')
+	with open(filename, 'r') as tmp_file:
+		ret_val = tmp_file.read()
+		if hasattr(ret_val, 'decode'):
+			# python2 decode to utf-8
+			ret_val = ret_val.decode('utf-8')
 	return ret_val
 
 def get_dir_files(path):
@@ -82,11 +85,10 @@ def build_file_size_dir(path):
 
 def strip_ext(files):
 	"""Strips the extension from a filename or list of filenames"""
-	if   isinstance(files, basestring):
-		return '.'.join(files.split('.')[:-1])
-	elif isinstance(files, list):
+	if isinstance(files, list):
 		# List comprehension of the above stripping process.
 		return ['.'.join(f.split('.')[:-1]) for f in files]
+	return '.'.join(files.split('.')[:-1])
 
 
 class DirectoryCache(object):
