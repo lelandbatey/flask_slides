@@ -4,6 +4,7 @@
 from __future__ import print_function
 from os.path import join, abspath
 import directory_cache
+from directory_cache import jdump, strip_ext
 import markdown
 import os.path
 import json
@@ -29,22 +30,9 @@ import os
 #
 
 
-def jdump(obj):
-    """Return json string representation of object"""
-    return json.dumps(obj, sort_keys=True, indent=4, separators=(',', ': '))
 def jprint(obj):
     """Print a json representation of a given object"""
     print(jdump(obj))
-
-def strip_ext(files):
-    """Strips the extension from a filename or list of filenames"""
-    if isinstance(files, basestring):
-        return '.'.join(files.split('.')[:-1])
-    elif isinstance(files, list):
-        # List comprehension of the above stripping process.
-        return ['.'.join(f.split('.')[:-1]) for f in files]
-
-
 
 class FlaskSlides(object):
     """Object for interacting with slides files. Note that this object carries
