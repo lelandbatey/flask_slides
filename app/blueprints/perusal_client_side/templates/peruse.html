@@ -1,0 +1,18 @@
+{% extends "foundation.html" %}
+
+{% block css %}
+<!--
+Google Font - Libre Baskerville
+
+I'm using this font in *my* presentation, but you don't have to use it in
+yours. Remove it if you like.
+
+-->
+<link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="/static/pygments.css">
+<link rel="stylesheet" type="text/css" href="/static/slide_default_style.css">
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript" src="{{ url_for('perusal.static', filename='perusal_controls.js') }}"></script>
+{% endblock script%}

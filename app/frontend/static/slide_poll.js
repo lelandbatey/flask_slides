@@ -44,7 +44,7 @@ function poll(){
 					current_slide_index = data;
 					update_slide(data);
 				};
-			poll(current_slide_index);
+				poll(current_slide_index);
 			}
 		});
 	},250);

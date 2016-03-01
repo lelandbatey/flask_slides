@@ -15,17 +15,17 @@ h1 {
     text-align    : center;
 }
 
-#present, #remote, #list {
+#present, #remote, #peruse {
     display: inline-block;
     text-align: center;
     height: 40%;
 }
 
-#remote, #list {
+#remote, #present {
     width: 50%;
 }
 
-#present {
+#peruse {
     background-color: #2E2E2E;
     
     width: 100%;
@@ -36,7 +36,7 @@ h1 {
     float: left;
 }
 
-#list {
+#present {
     background-color: DarkOrange;
     float: right; 
 }
@@ -57,7 +57,7 @@ a:visited {
 }
 
 /* Vertical centering of links */
-#present *, #remote *, #list * {
+#present *, #remote *, #peruse * {
     position: relative;
     top: 35%;
 }
