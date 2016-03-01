@@ -1,21 +1,21 @@
-{% extends "frontpage.html" %}
+{% extends "foundation.html" %}
 
 {% block css %}
-<!-- 
+<!--
 Google Font - Libre Baskerville
 
 I'm using this font in *my* presentation, but you don't have to use it in
-yours. Remove it if you like.   
+yours. Remove it if you like.
 
 -->
 <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="/static/pygments.css">
 <link rel="stylesheet" type="text/css" href="/static/slide_default_style.css">
 {% endblock %}
-	
+
 {% block script %}
-	{% if live %}
-	<script type="text/javascript" src="/static/slide_poll.js"></script>
-	<script type="text/javascript" src="/static/slide_control.js"></script>
-	{% endif %}
+    {% if live %}
+    <script type="text/javascript" src="/static/slide_poll.js"></script>
+    <script type="text/javascript" src="/static/slide_control.js"></script>
+    {% endif %}
 {% endblock script%}
