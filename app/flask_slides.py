@@ -3,8 +3,8 @@
 
 from __future__ import print_function
 from os.path import join, abspath
-import directory_cache
-from directory_cache import jdump, strip_ext
+from . import directory_cache
+from .directory_cache import jdump, strip_ext
 import markdown
 import os.path
 import json
@@ -145,5 +145,5 @@ class FlaskSlides(object):
 
 
 if __name__ == '__main__':
-    jprint(flask_slides().get_slides())
+    jprint(FlaskSlides().get_slides())
 

@@ -13,8 +13,9 @@ except ImportError:
     from urllib.request import urlopen
 # pylint: disable=W0312
 
-FLASK_SLIDES = flask_slides.FlaskSlides(slides_dir='./slides')
+# FLASK_SLIDES = flask_slides.FlaskSlides(slides_dir='./slides')
 APP = Flask(__name__)
+APP.config['SLIDES'] = flask_slides.FlaskSlides(slides_dir='./slides')
 
 
 # These are just some pet debug functions I love to have around. You'll
@@ -36,14 +37,14 @@ def root():
 @APP.route('/list/')
 def list_slides():
     """Render a list of slides"""
-    slides = sorted(FLASK_SLIDES.get_slides().keys())
+    slides = sorted(APP.config['SLIDES'].get_slides().keys())
     return render_template('list.html', slideList=slides)
 
 
 @APP.route('/view/<slide_name>')
 def view(slide_name):
     """Render a particular slide by name"""
-    slide_output = FLASK_SLIDES.render_slide(slide_name)
+    slide_output = APP.config['SLIDES'].render_slide(slide_name)
     return render_template('slide_page.html', slide=slide_output, name=slide_name)
 
 
@@ -52,8 +53,9 @@ def present():
     """Renders the slide page, including the current FLASK_SLIDES. This means the
     javascript doesn't have to load the slide, so there's no lag/delay.
     """
+    slides = APP.config['SLIDES']
     return render_template('slide_page.html',
-                           slide=FLASK_SLIDES.render_index(FLASK_SLIDES.index),
+                           slide=slides.render_index(slides.index),
                            name="Presenting", live=True)
 
 
@@ -63,12 +65,13 @@ def present_index():
 
     Client uses this to see if the slide has changed.
     """
-    return str(FLASK_SLIDES.index)
+    return str(APP.config['SLIDES'].index)
 
 @APP.route('/present/total_slides')
 def total_slides():
     """Returns total number of slides in deck."""
-    return str(len(FLASK_SLIDES.get_slide_list()))
+    slides = APP.config['SLIDES']
+    return str(len(slides.get_slide_list()))
 
 
 # Sends the contents of the slide, but doesn't render the entire page. Used by
@@ -76,7 +79,8 @@ def total_slides():
 @APP.route('/present/current_slide')
 def present_current_slide():
     """Returns contents of slide without rendering an entire page."""
-    return FLASK_SLIDES.render_index(FLASK_SLIDES.index)
+    slides = APP.config['SLIDES']
+    return slides.render_index(slides.index)
 
 
 @APP.route('/remote')
@@ -93,12 +97,14 @@ def remote():
 @APP.route('/remote/next')
 def next_slide():
     """Increment the current slide"""
-    FLASK_SLIDES.index += 1
+    slides = APP.config['SLIDES']
+    slides.index += 1
     return ""
 @APP.route('/remote/prior')
 def prior():
     """Decrement the current slide"""
-    FLASK_SLIDES.index -= 1
+    slides = APP.config['SLIDES']
+    slides.index -= 1
     return ""
 
 

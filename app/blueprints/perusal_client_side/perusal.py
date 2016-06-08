@@ -17,7 +17,6 @@ from ... import flask_slides
 #        - read
 
 
-FLASK_SLIDES = flask_slides.FlaskSlides()
 
 BP = flask.Blueprint('perusal', __name__, static_folder="static",
         static_url_path="/static/perusal", template_folder="templates")
@@ -25,7 +24,8 @@ BP = flask.Blueprint('perusal', __name__, static_folder="static",
 @BP.route('/slides/', methods=['GET'])
 def list_slides():
     """JSON view of list of slides available for viewing"""
-    slides = sorted(FLASK_SLIDES.get_slides())
+    flask_slides = flask.current_app.config['SLIDES']
+    slides = sorted(flask_slides.get_slides())
 
     data = []
     for idx, value in enumerate(slides):
@@ -50,10 +50,11 @@ def get_slide(slide_id):
 
     slide_name = ""
     slide_body = ""
-    slides_list = sorted(FLASK_SLIDES.get_slides())
+    flask_slides = flask.current_app.config['SLIDES']
+    slides_list = sorted(flask_slides.get_slides())
     for idx, value in enumerate(slides_list):
         if idx == slide_id:
-            slide_body = FLASK_SLIDES.render_slide(value)
+            slide_body = flask_slides.render_slide(value)
             slide_name = value
 
     response = {

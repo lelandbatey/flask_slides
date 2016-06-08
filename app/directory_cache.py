@@ -120,7 +120,7 @@ class DirectoryCache(object):
 	def get_files_list(self):
 		"""Returns sorted list of files in the data_dir directory"""
 		data_dir = os.path.abspath(self.data_dir)
-		files = [f for f in os.listdir(data_dir) if isfile(join(data_dir, f))]
+		files = [f for f in os.listdir(data_dir) if isfile(join(data_dir, f)) and not f.startswith('.')]
 		return sorted(files)
 
 	def build_file_size_dict(self):
